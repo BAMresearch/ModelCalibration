@@ -1,5 +1,5 @@
 import numpy as np
-
+from bayes.parameters import ParameterList
 
 class LinearModel:
     """
@@ -34,6 +34,18 @@ class LinearModel:
         df_x = parameters['b'] * np.ones(len(self.x_derivative))
         return [f_x, df_x]
 
+    def get_parameter_dict(self):
+        """Create a parameter list initialized with parameters all set either to None
+        or to some standard value (in case this is a deterministic variable, this value will
+        always be used
+
+        Returns: parameter list
+        """
+        prm = ParameterList()
+        prm.define("a", None)
+        prm.define("b", None)
+        return prm
+
     @staticmethod
     def are_parameters_valid(parameters):
         """
@@ -64,4 +76,4 @@ class LinearModel:
         assert 'b' in parameters.names
 
         assert parameters['a'] > 0
-        assert parameters['b'] > 0
+        #assert parameters['b'] > 0
